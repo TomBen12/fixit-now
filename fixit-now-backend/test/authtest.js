@@ -1,34 +1,38 @@
 import fetch from "node-fetch";
+import dotenv from "dotenv";
+dotenv.config();
 
-const API = "http://localhost:5001/api/auth";
+const BASE_URL = "http://localhost:5001/api/auth";
 
-const user = {
-  username: "testuser",
-  email: "testuser@example.com",
-  password: "123456"
-};
+async function runAuthTest() {
+  try {
+    const res = await fetch(`${BASE_URL}/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: "client",
+        email: "client@example.com",
+        password: "1234",
+      }),
+    });
 
-async function register() {
-  const res = await fetch(`${API}/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user)
-  });
-  const data = await res.json();
-  console.log("Register:", data);
+    const data = await res.json();
+    console.log("Registered:", data);
+
+    const loginRes = await fetch(`${BASE_URL}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: "client@example.com",
+        password: "1234",
+      }),
+    });
+
+    const loginData = await loginRes.json();
+    console.log("Logged in:", loginData);
+  } catch (err) {
+    console.error("Auth test error:", err);
+  }
 }
 
-async function login() {
-  const res = await fetch(`${API}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email: user.email, password: user.password })
-  });
-  const data = await res.json();
-  console.log("Login:", data);
-  const token = data.token
-  return token;
-}
-
-await register();
-await login();
+runAuthTest();

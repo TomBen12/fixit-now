@@ -1,15 +1,15 @@
 export async function up(knex) {
   return knex.schema.createTable("users", (table) => {
-    table.increments("id").primary();
-    table.string("username").notNullable();
-    table.string("email").notNullable().unique();
-    table.string("password_hash").notNullable();
-    table.string("profile_picture_url");
-    table.text("bio");
-    table.timestamps(true, true);
+    table.increments("id").primary(); // Primary key
+    table.string("username").notNullable(); // Display name
+    table.string("email").notNullable().unique(); // Login identity
+    table.string("password_hash").notNullable(); // Hashed password
+    table.string("profile_picture_url"); // Optional profile image
+    table.text("bio"); // Optional user bio
+    table.timestamps(true, true); // created_at / updated_at
   });
-};
+}
 
 export async function down(knex) {
-  return knex.schema.dropTable("users");
-};
+  return knex.schema.dropTableIfExists("users");
+}

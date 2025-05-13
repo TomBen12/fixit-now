@@ -1,48 +1,67 @@
 import fetch from "node-fetch";
+import dotenv from "dotenv";
+dotenv.config();
 
-const API = "http://localhost:5001/api/auth";
+const BASE_URL = "http://localhost:5001/api/auth";
 
-const user = {
-  username: "testuser",
-  email: "testuser@example.com",
-  password: "123456",
-};
+let clientToken = null;
+let providerToken = null;
 
-let token = null;
+async function loginOrRegister({ username, email, password }) {
+  try {
+    const loginRes = await fetch(`${BASE_URL}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-async function getToken() {
-  if (token) return token;
+    if (loginRes.ok) {
+      const { token } = await loginRes.json();
+      return token;
+    }
 
-  // Try login
-  const resLogin = await fetch(`${API}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email: user.email, password: user.password }),
-  });
-  const loginData = await resLogin.json();
+    // Register if login failed--
+    const registerRes = await fetch(`${BASE_URL}/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, email, password }),
+    });
 
-  if (loginData.token) {
-    token = loginData.token;
+    const { token } = await registerRes.json();
     return token;
+  } catch (err) {
+    console.error("Token setup error:", err);
+    return null;
   }
-
-  // If login failed → register
-  await fetch(`${API}/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user),
-  });
-
-  // Try login again
-  const resLogin2 = await fetch(`${API}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email: user.email, password: user.password }),
-  });
-  const loginData2 = await resLogin2.json();
-
-  token = loginData2.token;
-  return token;
 }
 
-export default getToken;
+export async function getClientToken() {
+  if (!clientToken) {
+    clientToken = await loginOrRegister({
+      username: "client",
+      email: "client@example.com",
+      password: "1234",
+    });
+  }
+  return clientToken;
+}
+
+export async function getProviderToken() {
+  if (!providerToken) {
+    providerToken = await loginOrRegister({
+      username: "provider",
+      email: "provider@example.com",
+      password: "1234",
+    });
+  }
+  return providerToken;
+}
+
+// Optional: get both at once
+export async function getBothTokens() {
+  const [client, provider] = await Promise.all([
+    getClientToken(),
+    getProviderToken(),
+  ]);
+  return { client, provider };
+}

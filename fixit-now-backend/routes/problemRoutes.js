@@ -11,22 +11,26 @@ import { verifyToken } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-// Public → list problems
+// ─────────────── PUBLIC ROUTES ───────────────
+
+// GET /api/problems - All open (unfixed) problems for providers
 router.get("/", listProblems);
 
-// Protected → create problem
+// GET /api/problems/all - All problems including fixed (for admin or stats)
+router.get("/all", listAllProblems);
+
+// ─────────────── PROTECTED ROUTES ───────────────
+
+// POST /api/problems - Create a new problem (client only)
 router.post("/", verifyToken, postProblem);
 
-// Protected → List my problems
+// GET /api/problems/mine - Get all problems created by the logged-in user
 router.get("/mine", verifyToken, listMyProblems);
 
-// Protected → Mark as fixed
+// PUT /api/problems/:id/fix - Mark a problem as fixed (owner only)
 router.put("/:id/fix", verifyToken, fixProblem);
 
-// Protected → Delete problem
+// DELETE /api/problems/:id - Remove a problem (owner only)
 router.delete("/:id", verifyToken, removeProblem);
-
-// Public → List all problems
-router.get("/all", listAllProblems);
 
 export default router;

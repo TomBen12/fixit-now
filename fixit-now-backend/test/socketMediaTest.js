@@ -1,4 +1,4 @@
-// socketTest.js
+// socketMediaTest.js
 import { io } from "socket.io-client";
 import { getClientToken, getProviderToken } from "./token.js";
 import fetch from "node-fetch";
@@ -41,17 +41,18 @@ async function start() {
     console.log("✅ Socket connected:", socket.id);
     socket.emit("joinChat", chatId);
 
-    const message = {
+    const mediaMessage = {
       chat_id: chatId,
-      from_user_id: 2, // You can automate this with /me route
-      content: "Hello from socketTest",
+      from_user_id: 2, // Replace with dynamic user ID if possible
+      content: "Here is the video",
+      file_url: "/uploads/sample-video.mp4", // Ensure this file exists server-side
     };
 
-    socket.emit("chat:message", message);
+    socket.emit("chat:message", mediaMessage);
   });
 
   socket.on("chat:message", (msg) => {
-    console.log("📨 Message received:", msg);
+    console.log("📨 Media message received:", msg);
     socket.disconnect();
   });
 }
