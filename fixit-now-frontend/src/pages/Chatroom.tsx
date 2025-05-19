@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/index";
-import { MdSend, MdImage, MdUpload } from "react-icons/md";
+import { MdSend } from "react-icons/md";
 import { io, Socket } from "socket.io-client";
 import "./MyProblems.css";
 
