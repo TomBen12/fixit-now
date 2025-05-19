@@ -4,6 +4,8 @@ import { setUser, setLoading, setError } from "../store/slices/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
+const API_URL = import.meta.env.VITE_API_URL || "";
+
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,7 +24,7 @@ const Login = () => {
     setLocalError("");
     try {
       dispatch(setLoading(true));
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
