@@ -18,7 +18,8 @@ const server = http.createServer(app);
 // Initialize Socket.IO
 const io = new Server(server, {
   cors: {
-    origin: "*", // In production, replace this with your frontend origin
+    origin: process.env.CORS_ORIGIN?.split(",") || "http://localhost:5173",
+    credentials: true,
   },
 });
 
@@ -30,7 +31,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173", // Frontend URL for local development
+    origin: process.env.CORS_ORIGIN?.split(",") || "http://localhost:5173",
     credentials: true,
   })
 );
