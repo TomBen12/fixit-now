@@ -4,6 +4,8 @@ import { setUser, setLoading, setError } from "../store/slices/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 
+const API_URL = import.meta.env.VITE_API_URL || "";
+
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,7 +31,7 @@ const Register = () => {
     }
     try {
       dispatch(setLoading(true));
-      const res = await fetch("/api/auth/register", {
+      const res = await fetch(`${API_URL}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
