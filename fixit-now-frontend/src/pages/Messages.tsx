@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import type { RootState } from "../store/index";
-import { MdChatBubble, MdFiberManualRecord } from "react-icons/md";
+import { MdChatBubble } from "react-icons/md";
 import "./MyProblems.css";
 
 interface Chatroom {
@@ -17,7 +15,6 @@ interface Chatroom {
 }
 
 const Messages: React.FC = () => {
-  const user = useSelector((state: RootState) => state.auth.user);
   const [chatrooms, setChatrooms] = useState<Chatroom[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import type { RootState } from "../store/index";
@@ -11,7 +11,6 @@ const DashboardLayout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [chatrooms, setChatrooms] = useState<any[]>([]);
   const [unreadConversations, setUnreadConversations] = useState(0);
 
   useEffect(() => {
@@ -19,7 +18,6 @@ const DashboardLayout = () => {
     fetch("/api/chats/mine", { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
-        setChatrooms(data);
         setUnreadConversations(
           data.filter((c: any) => c.unread_count > 0).length
         );

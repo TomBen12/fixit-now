@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { MdFlashOn, MdLock, MdChatBubble } from "react-icons/md";
 import "./Landing.css";
