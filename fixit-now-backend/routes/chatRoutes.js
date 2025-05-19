@@ -7,6 +7,8 @@ import {
   getChatMessages,
   uploadChatMedia,
   getUserChats,
+  getUserChatrooms,
+  markChatAsRead,
 } from "../controllers/chatController.js";
 
 const router = express.Router();
@@ -32,5 +34,11 @@ router.post(
   upload.single("file"),
   uploadChatMedia
 );
+
+// GET /api/chats/mine - All chatrooms for the logged-in user with details
+router.get("/mine", verifyToken, getUserChatrooms);
+
+// PATCH /api/chats/:id/read - Mark all messages in a chat as read for the current user
+router.patch("/:id/read", verifyToken, markChatAsRead);
 
 export default router;

@@ -1,0 +1,195 @@
+.modern-auth-bg {
+  min-height: 100vh;
+  background: linear-gradient(120deg, #f6f8fa 60%, #eaf0fa 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  padding-top: 4.5rem;
+}
+
+.modern-navbar {
+  width: 100%;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.modern-navbar-brand {
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #1a2a44;
+  text-decoration: none;
+  letter-spacing: -1px;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+.modern-navbar-link {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a2a44;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.modern-navbar-link:hover {
+  background: rgba(255, 107, 0, 0.1);
+  color: #ff6b00;
+}
+
+.modern-auth-container {
+  width: 100%;
+  max-width: 480px;
+  margin: 2.5rem auto;
+  padding: 0 0.25rem;
+}
+
+.modern-auth-header {
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.modern-auth-logo {
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #1a2a44;
+  text-decoration: none;
+  letter-spacing: -1px;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+.modern-auth-card {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(20, 40, 80, 0.1);
+  padding: 2.5rem 2rem;
+  border: 1.5px solid #f0f1f3;
+  backdrop-filter: blur(2px);
+}
+
+.modern-auth-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1a2a44;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  letter-spacing: -0.5px;
+}
+
+.modern-auth-subtitle {
+  font-size: 1.08rem;
+  color: #3a4763;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.modern-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.modern-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.modern-form-group label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1a2a44;
+}
+
+.modern-form-group input {
+  padding: 0.9rem 1rem;
+  border: 1.5px solid #e1e4e8;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #1a2a44;
+  background: #fff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.modern-form-group input:focus {
+  outline: none;
+  border-color: #ff6b00;
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+}
+
+.modern-form-group input::placeholder {
+  color: #8b95a5;
+}
+
+.modern-auth-submit {
+  background: #ff6b00;
+  color: #fff;
+  font-size: 1.08rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s;
+  box-shadow: 0 2px 8px rgba(255, 107, 0, 0.1);
+}
+
+.modern-auth-submit:hover {
+  background: #e65a00;
+  box-shadow: 0 4px 16px rgba(255, 107, 0, 0.15);
+}
+
+.modern-auth-switch {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #3a4763;
+  font-size: 0.95rem;
+}
+
+.modern-auth-link {
+  color: #ff6b00;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+
+.modern-auth-link:hover {
+  color: #e65a00;
+}
+
+@media (max-width: 700px) {
+  .modern-auth-container {
+    max-width: 99vw;
+    padding: 0 0.1rem;
+  }
+
+  .modern-auth-bg {
+    padding-top: 3.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modern-auth-container {
+    padding: 0 0.05rem;
+  }
+
+  .modern-auth-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .modern-auth-title {
+    font-size: 1.5rem;
+  }
+
+  .modern-auth-subtitle {
+    font-size: 1rem;
+  }
+}
+ 

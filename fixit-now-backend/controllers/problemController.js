@@ -6,6 +6,8 @@ import {
   findProblemById,
   deleteProblem,
   getAllProblems,
+  updateProblemMedia,
+  getAllProblemsWithOwner,
 } from "../models/problemModel.js";
 
 // ─────────────── POST: Create a new problem ───────────────
@@ -95,10 +97,61 @@ export const removeProblem = async (req, res) => {
 // ─────────────── GET: All problems (even fixed) ───────────────
 export const listAllProblems = async (req, res) => {
   try {
-    const problems = await getAllProblems();
-    res.json(problems);
+    const problems = await getAllProblemsWithOwner();
+    // Map owner info into a nested object for frontend
+    const result = problems.map((p) => ({
+      ...p,
+      owner: {
+        id: p.owner_id,
+        username: p.owner_username,
+        email: p.owner_email,
+      },
+    }));
+    res.json(result);
   } catch (err) {
     console.error("listAllProblems error:", err);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+// ─────────────── PATCH: Upload media for a problem ───────────────
+export const uploadProblemMedia = async (req, res) => {
+  try {
+    const problemId = req.params.id;
+    const problem = await findProblemById(problemId);
+    if (!problem) return res.status(404).json({ message: "Problem not found" });
+    if (problem.user_id !== req.user.id) {
+      return res.status(403).json({ message: "Not your problem" });
+    }
+    if (!req.file) return res.status(400).json({ message: "No file uploaded" });
+    const fileUrl = `/uploads/${req.file.filename}`;
+    const media = Array.isArray(problem.media) ? problem.media : [];
+    media.push(fileUrl);
+    await updateProblemMedia(problemId, media);
+    res.json({ media });
+  } catch (err) {
+    console.error("uploadProblemMedia error:", err);
+    res.status(500).json({ message: "Failed to upload media" });
+  }
+};
+
+// ─────────────── DELETE: Remove media from a problem ───────────────
+export const removeProblemMedia = async (req, res) => {
+  try {
+    const problemId = req.params.id;
+    const { fileUrl } = req.body;
+    const problem = await findProblemById(problemId);
+    if (!problem) return res.status(404).json({ message: "Problem not found" });
+    if (problem.user_id !== req.user.id) {
+      return res.status(403).json({ message: "Not your problem" });
+    }
+    const media = (Array.isArray(problem.media) ? problem.media : []).filter(
+      (url) => url !== fileUrl
+    );
+    await updateProblemMedia(problemId, media);
+    res.json({ media });
+  } catch (err) {
+    console.error("removeProblemMedia error:", err);
+    res.status(500).json({ message: "Failed to remove media" });
   }
 };

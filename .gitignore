@@ -7,10 +7,10 @@ logs/
 npm-debug.log*
 
 # dotenv env file
-.env
+# .env
 
 # Uploaded media files
-uploads/
+# uploads/
 
 # OS-specific files
 .DS_Store

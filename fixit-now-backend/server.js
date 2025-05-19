@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import http from "http";
 import { Server } from "socket.io";
+import cookieParser from "cookie-parser";
 
 import { initSocket } from "./socket/socket.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -26,7 +27,13 @@ console.log("--Socket.IO initialized--");
 
 // === Middlewares ===
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Frontend URL for local development
+    credentials: true,
+  })
+);
 app.use("/uploads", express.static("uploads")); // Serve media files
 
 // === Routes ===
