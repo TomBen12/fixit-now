@@ -5,6 +5,8 @@ import type { RootState } from "../store/index";
 import { MdImage, MdChat } from "react-icons/md";
 import "./ProblemBoard.css";
 
+const API_URL = import.meta.env.VITE_API_URL || "";
+
 interface Problem {
   id: number;
   title: string;
@@ -28,12 +30,31 @@ const ProblemBoard: React.FC = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("/api/problems/board", { credentials: "include" })
+    fetch(`${API_URL}/api/problems/board`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => setProblems(data))
       .catch(() => setError("Failed to load problems"))
       .finally(() => setLoading(false));
   }, []);
+
+  const handleStartChat = async (problemId: number) => {
+    try {
+      const res = await fetch(`${API_URL}/api/chats`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ problem_id: problemId }),
+      });
+      if (res.ok) {
+        const chat = await res.json();
+        navigate(`/chat/${chat.id}`);
+      } else {
+        alert("Failed to start or find chatroom");
+      }
+    } catch {
+      alert("Failed to start or find chatroom");
+    }
+  };
 
   return (
     <div className="problemboard-container">
@@ -107,24 +128,7 @@ const ProblemBoard: React.FC = () => {
                     marginTop: "0.5rem",
                     justifyContent: "center",
                   }}
-                  onClick={async () => {
-                    try {
-                      const res = await fetch("/api/chats", {
-                        method: "POST",
-                        credentials: "include",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ problem_id: problem.id }),
-                      });
-                      if (res.ok) {
-                        const chat = await res.json();
-                        navigate(`/chat/${chat.id}`);
-                      } else {
-                        alert("Failed to start or find chatroom");
-                      }
-                    } catch {
-                      alert("Failed to start or find chatroom");
-                    }
-                  }}
+                  onClick={() => handleStartChat(problem.id)}
                 >
                   <MdChat size={18} style={{ marginRight: 4 }} /> Initiate Chat
                 </button>

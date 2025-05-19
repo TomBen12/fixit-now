@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/index";
-import { MdSend } from "react-icons/md";
+import { MdSend, MdImage, MdUpload } from "react-icons/md";
 import { io, Socket } from "socket.io-client";
 import "./MyProblems.css";
+
+const API_URL = import.meta.env.VITE_API_URL || "";
 
 interface Message {
   id: number;
@@ -25,7 +27,7 @@ interface ChatroomInfo {
 }
 
 // Only create one socket instance for the app
-const socket: Socket = io("http://localhost:5001", {
+const socket: Socket = io(API_URL, {
   withCredentials: true,
   transports: ["websocket"],
 });
@@ -45,11 +47,11 @@ const Chatroom: React.FC = () => {
     if (!chatId) return;
     setLoading(true);
     Promise.all([
-      fetch(`/api/chats/${chatId}/messages`, { credentials: "include" }).then(
+      fetch(`${API_URL}/api/chats/${chatId}/messages`, {
+        credentials: "include",
+      }).then((res) => res.json()),
+      fetch(`${API_URL}/api/chats/user`, { credentials: "include" }).then(
         (res) => res.json()
-      ),
-      fetch(`/api/chats/user`, { credentials: "include" }).then((res) =>
-        res.json()
       ),
     ])
       .then(([msgs, chats]) => {
@@ -63,7 +65,7 @@ const Chatroom: React.FC = () => {
           });
         }
         // Mark all messages as read when chatroom is opened
-        fetch(`/api/chats/${chatId}/read`, {
+        fetch(`${API_URL}/api/chats/${chatId}/read`, {
           method: "PATCH",
           credentials: "include",
         });
@@ -106,7 +108,7 @@ const Chatroom: React.FC = () => {
     setInput("");
     setLoading(false);
     // Mark as read after sending (to keep unread count in sync)
-    fetch(`/api/chats/${chatId}/read`, {
+    fetch(`${API_URL}/api/chats/${chatId}/read`, {
       method: "PATCH",
       credentials: "include",
     });

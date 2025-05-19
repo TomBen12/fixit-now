@@ -6,6 +6,8 @@ import { logout } from "../store/slices/authSlice";
 import { MdDashboard, MdAssignment, MdMessage, MdSearch } from "react-icons/md";
 import "./DashboardLayout.css";
 
+const API_URL = import.meta.env.VITE_API_URL || "";
+
 const DashboardLayout = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
@@ -15,7 +17,7 @@ const DashboardLayout = () => {
 
   useEffect(() => {
     // Fetch chatrooms for unread count
-    fetch("/api/chats/mine", { credentials: "include" })
+    fetch(`${API_URL}/api/chats/mine`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         setUnreadConversations(
@@ -27,7 +29,7 @@ const DashboardLayout = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await fetch("/api/auth/logout", {
+      const res = await fetch(`${API_URL}/api/auth/logout`, {
         method: "POST",
         credentials: "include",
       });

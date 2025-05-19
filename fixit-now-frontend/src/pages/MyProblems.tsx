@@ -11,6 +11,8 @@ import {
 } from "react-icons/md";
 import "./MyProblems.css";
 
+const API_URL = import.meta.env.VITE_API_URL || "";
+
 interface Problem {
   id: number;
   title: string;
@@ -40,7 +42,7 @@ const MyProblems: React.FC = () => {
   useEffect(() => {
     if (!user) return;
     setLoading(true);
-    fetch("/api/problems/mine", { credentials: "include" })
+    fetch(`${API_URL}/api/problems/mine`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => setProblems(data))
       .catch(() => setError("Failed to load problems"))
@@ -58,7 +60,7 @@ const MyProblems: React.FC = () => {
     }
     setLoading(true);
     try {
-      const res = await fetch("/api/problems", {
+      const res = await fetch(`${API_URL}/api/problems`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -95,7 +97,7 @@ const MyProblems: React.FC = () => {
     formData.append("file", file);
     setLoading(true);
     try {
-      const res = await fetch(`/api/problems/${problemId}/media`, {
+      const res = await fetch(`${API_URL}/api/problems/${problemId}/media`, {
         method: "PATCH",
         credentials: "include",
         body: formData,
@@ -118,7 +120,7 @@ const MyProblems: React.FC = () => {
   const handleRemoveMedia = async (problemId: number, fileUrl: string) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/problems/${problemId}/media`, {
+      const res = await fetch(`${API_URL}/api/problems/${problemId}/media`, {
         method: "DELETE",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -140,7 +142,7 @@ const MyProblems: React.FC = () => {
   const handleSetFixed = async (problemId: number) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/problems/${problemId}/fix`, {
+      const res = await fetch(`${API_URL}/api/problems/${problemId}/fix`, {
         method: "PUT",
         credentials: "include",
       });
@@ -161,7 +163,7 @@ const MyProblems: React.FC = () => {
       return;
     setLoading(true);
     try {
-      const res = await fetch(`/api/problems/${problemId}`, {
+      const res = await fetch(`${API_URL}/api/problems/${problemId}`, {
         method: "DELETE",
         credentials: "include",
       });

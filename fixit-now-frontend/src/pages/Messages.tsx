@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MdChatBubble } from "react-icons/md";
 import "./MyProblems.css";
+
+const API_URL = import.meta.env.VITE_API_URL || "";
 
 interface Chatroom {
   id: number;
@@ -22,7 +24,7 @@ const Messages: React.FC = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("/api/chats/mine", { credentials: "include" })
+    fetch(`${API_URL}/api/chats/mine`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => setChatrooms(data))
       .catch(() => setError("Failed to load chatrooms"))
