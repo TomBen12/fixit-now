@@ -91,9 +91,9 @@ const ProblemBoard: React.FC = () => {
                   problem.media.map((url) => (
                     <div key={url} className="problemboard-media-item">
                       {url.match(/\.(jpg|jpeg|png|gif)$/i) ? (
-                        <img src={url} alt="media" />
+                        <img src={`${API_URL}/uploads/${url}`} alt="media" />
                       ) : url.match(/\.(mp4|mov|avi)$/i) ? (
-                        <video src={url} controls />
+                        <video src={`${API_URL}/uploads/${url}`} controls />
                       ) : null}
                     </div>
                   ))
