@@ -44,7 +44,13 @@ const MyProblems: React.FC = () => {
     setLoading(true);
     fetch(`${API_URL}/api/problems/mine`, { credentials: "include" })
       .then((res) => res.json())
-      .then((data) => setProblems(data))
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setProblems(data);
+        } else {
+          setError("Failed to load problems");
+        }
+      })
       .catch(() => setError("Failed to load problems"))
       .finally(() => setLoading(false));
   }, [user]);
