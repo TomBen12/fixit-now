@@ -16,7 +16,7 @@ const DashboardLayout = () => {
   const [unreadConversations, setUnreadConversations] = useState(0);
 
   useEffect(() => {
-    // Fetch chatrooms for unread count
+    // Fetch chatrooms
     fetch(`${API_URL}/api/chats/mine`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {

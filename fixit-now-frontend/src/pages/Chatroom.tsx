@@ -26,7 +26,7 @@ interface ChatroomInfo {
   };
 }
 
-// Only create one socket instance for the app
+// Only one socket instance for the app
 const socket: Socket = io(API_URL, {
   withCredentials: true,
   transports: ["websocket"],
@@ -42,7 +42,7 @@ const Chatroom: React.FC = () => {
   const [error, setError] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Fetch chat info and messages (REST, for initial load)
+  // Fetch chat info + messages
   useEffect(() => {
     if (!chatId) return;
     setLoading(true);
@@ -56,7 +56,7 @@ const Chatroom: React.FC = () => {
     ])
       .then(([msgs, chats]) => {
         setMessages(msgs);
-        // Find chat info for this chatId
+        // Find chat info fo chatId
         const chat = chats.find((c: any) => c.id === Number(chatId));
         if (chat) {
           setChatInfo({
@@ -64,7 +64,6 @@ const Chatroom: React.FC = () => {
             other_user: chat.other_user,
           });
         }
-        // Mark all messages as read when chatroom is opened
         fetch(`${API_URL}/api/chats/${chatId}/read`, {
           method: "PATCH",
           credentials: "include",
@@ -74,7 +73,7 @@ const Chatroom: React.FC = () => {
       .finally(() => setLoading(false));
   }, [chatId]);
 
-  // Socket.IO: join chatroom and listen for new messages
+  // join chatroom and listen for new messages
   useEffect(() => {
     if (!chatId || !user) return;
     socket.emit("joinChat", Number(chatId));
@@ -88,12 +87,12 @@ const Chatroom: React.FC = () => {
     };
   }, [chatId, user]);
 
-  // Auto-scroll to bottom
+  // auto-scroll
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Send message (via socket, fallback to REST if needed)
+  // Send message via socket will fallback to REST
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || !user) return;
@@ -107,7 +106,7 @@ const Chatroom: React.FC = () => {
     });
     setInput("");
     setLoading(false);
-    // Mark as read after sending (to keep unread count in sync)
+    // Mark as read after sending 
     fetch(`${API_URL}/api/chats/${chatId}/read`, {
       method: "PATCH",
       credentials: "include",

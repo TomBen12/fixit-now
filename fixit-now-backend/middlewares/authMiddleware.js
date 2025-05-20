@@ -6,13 +6,13 @@ const SECRET = process.env.JWT_SECRET || "mysecret";
 export const verifyToken = async (req, res, next) => {
   let token;
 
-  // 1. Check Authorization header
+  // Check Authorization header
   const authHeader = req.headers.authorization;
   if (authHeader && authHeader.startsWith("Bearer ")) {
     token = authHeader.split(" ")[1];
   }
 
-  // 2. If not in header, check cookies
+  // If not in header, check cookies
   if (!token && req.cookies && req.cookies.token) {
     token = req.cookies.token;
   }

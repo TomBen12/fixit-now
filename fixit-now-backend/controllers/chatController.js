@@ -4,7 +4,7 @@ import {
   getChatsForProblem,
   getMessagesForChat,
   getChatsByUserId,
-  createMessage, // media and text both go here
+  createMessage,
   getUserChatroomsWithDetails,
 } from "../models/chatModel.js";
 import { findProblemById } from "../models/problemModel.js";
@@ -130,7 +130,7 @@ export const getUserChatrooms = async (req, res) => {
   }
 };
 
-// PATCH: Mark all messages in a chat as read for the current user
+//Mark all messages in a chat as read for the current user
 export const markChatAsRead = async (req, res) => {
   try {
     const chatId = req.params.id;

@@ -98,7 +98,6 @@ export const removeProblem = async (req, res) => {
 export const listAllProblems = async (req, res) => {
   try {
     const problems = await getAllProblemsWithOwner();
-    // Map owner info into a nested object for frontend
     const result = problems.map((p) => ({
       ...p,
       owner: {

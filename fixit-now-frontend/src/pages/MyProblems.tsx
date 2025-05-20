@@ -81,7 +81,7 @@ const MyProblems: React.FC = () => {
       setFiles(null);
       setSuccess("Problem created!");
       setIsFormOpen(false);
-      // If files are selected, upload them all
+      // if files  selected, upload  all
       if (files && files.length > 0) {
         for (let i = 0; i < files.length; i++) {
           await handleUploadMedia(newProblem.id, files[i]);
@@ -97,7 +97,7 @@ const MyProblems: React.FC = () => {
     }
   };
 
-  // Upload media to a problem
+  // upload media to a problem
   const handleUploadMedia = async (problemId: number, file: File) => {
     const formData = new FormData();
     formData.append("file", file);
@@ -122,7 +122,7 @@ const MyProblems: React.FC = () => {
     }
   };
 
-  // Remove media from a problem
+  // remv mdia from  problem
   const handleRemoveMedia = async (problemId: number, fileUrl: string) => {
     setLoading(true);
     try {
@@ -144,7 +144,7 @@ const MyProblems: React.FC = () => {
     }
   };
 
-  // Mark as fixed
+  // fix problem
   const handleSetFixed = async (problemId: number) => {
     setLoading(true);
     try {
@@ -163,7 +163,7 @@ const MyProblems: React.FC = () => {
     }
   };
 
-  // Delete a problem
+  // delete  problem
   const handleDelete = async (problemId: number) => {
     if (!window.confirm("Are you sure you want to delete this problem?"))
       return;

@@ -43,12 +43,11 @@ code {
     monospace;
 }
 
-/* Smooth scrolling */
+/* smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Better button and input defaults */
 button,
 input,
 select,
@@ -59,7 +58,6 @@ textarea {
   margin: 0;
 }
 
-/* Remove default button styles */
 button {
   background: none;
   border: none;
@@ -67,7 +65,6 @@ button {
   cursor: pointer;
 }
 
-/* Better link defaults */
 a {
   color: var(--secondary);
   text-decoration: none;
@@ -78,13 +75,11 @@ a:hover {
   color: var(--primary);
 }
 
-/* Better focus styles */
 :focus {
   outline: 2px solid var(--secondary);
   outline-offset: 2px;
 }
 
-/* Better selection styles */
 ::selection {
   background-color: var(--secondary);
   color: var(--white);
