@@ -22,12 +22,12 @@ const Landing = () => {
           <section className="modern-hero modern-hero-centered">
             <div className="modern-hero-content">
               <h1 className="modern-hero-title">
-                Get Help Instantly,{" "}
-                <span className="modern-hero-accent">Solve Anything</span>
+                Post Your Problem,{" "}
+                <span className="modern-hero-accent">Get Help Now</span>
               </h1>
               <p className="modern-hero-subtitle">
-                Connect with top experts in real-time. Fast, secure, and
-                reliable solutions for your toughest problems.
+                Share your problems with the community. Connect with others who
+                can help. Fast, secure, and reliable problem-solving platform.
               </p>
               <Link to="/register" className="modern-hero-cta">
                 Get Started
@@ -40,8 +40,8 @@ const Landing = () => {
               <div className="modern-feature-icon">
                 <MdFlashOn size={38} color="#FF6B00" />
               </div>
-              <h3>Instant Matching</h3>
-              <p>Get connected to the right expert in seconds.</p>
+              <h3>Problem Board</h3>
+              <p>Browse and post problems in our community board.</p>
             </div>
             <div className="modern-feature-card">
               <div className="modern-feature-icon">
@@ -55,7 +55,7 @@ const Landing = () => {
                 <MdChatBubble size={38} color="#FF6B00" />
               </div>
               <h3>Real-Time Chat</h3>
-              <p>Collaborate and solve problems live with experts.</p>
+              <p>Communicate and solve problems together in real-time.</p>
             </div>
           </section>
 
