@@ -304,7 +304,7 @@ const MyProblems: React.FC = () => {
                       <div key={url} className="myproblems-media-item">
                         {isImage ? (
                           <img
-                            src={url}
+                            src={`${API_URL}/uploads/${url}`}
                             alt="media"
                             onClick={() => {
                               setPreviewUrl(url);
@@ -314,7 +314,7 @@ const MyProblems: React.FC = () => {
                           />
                         ) : isVideo ? (
                           <video
-                            src={url}
+                            src={`${API_URL}/uploads/${url}`}
                             controls
                             onClick={() => {
                               setPreviewUrl(url);
